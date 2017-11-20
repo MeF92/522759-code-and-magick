@@ -44,7 +44,7 @@ window.renderStatistics = function (ctx, names, times) {
   }
 
   var histogramHeight = 150;
-  var step = histogramHeight / (maxValue - 0);
+  var step = histogramHeight / maxValue;
   var getRandom = function getRandom(min, max) {
     return Math.random() * (max - min) + min;
   };
@@ -52,18 +52,12 @@ window.renderStatistics = function (ctx, names, times) {
   for (var i = 0; i < names.length; i++) {
     if (names[i] === 'Вы') {
       ctx.fillStyle = 'rgba(255, 0, 0, 1.0)';
-      ctx.fillRect(150, 250, 40, -(times[i] * step));
-      ctx.fillStyle = '#000';
-      ctx.fillText(names[i], 150, 270);
-      ctx.fillText(times[i].toFixed(), 150, 90);
-    } else if (names[i] !== 'Вы') {
-      for (var j = 1; j < names.length; j++) {
-        ctx.fillStyle = 'rgba(0, 0, 255, ' + getRandom(0.1, 1) + ')';
-        ctx.fillRect(150 + 90 * j, 250, 40, -(times[j] * step));
-        ctx.fillStyle = '#000';
-        ctx.fillText(names[j], 150 + 90 * j, 270);
-        ctx.fillText(times[j].toFixed(), 150 + 90 * j, 90);
-      }
+    } else {
+      ctx.fillStyle = 'rgba(0, 0, 255, ' + getRandom(0.1, 1) + ')';
     }
+    ctx.fillRect(150 + 90 * i, 250, 40, -(times[i] * step));
+    ctx.fillStyle = '#000';
+    ctx.fillText(names[i], 150 + 90 * i, 270);
+    ctx.fillText(times[i].toFixed(), 150 + 90 * i, -(times[i] * step));
   }
 };
