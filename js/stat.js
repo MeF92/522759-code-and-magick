@@ -4,7 +4,7 @@
   window.renderStatistics = function (ctx, names, times) {
     drawingCloud(ctx);
     writingVictoryMessage(ctx);
-    definingColumnsHeight(times);
+    var step = definingColumnsHeight(times);
     drawingColumnsWithResults(ctx, names, times, step);
   };
 
@@ -49,7 +49,6 @@
   };
 
   var definingColumnsHeight = function (times) {
-    var step = definingColumnsHeight(times);
     var maxValue = -1;
 
     for (var i = 0; i < times.length; i++) {
@@ -60,8 +59,7 @@
     }
 
     var histogramHeight = 150;
-    step = histogramHeight / maxValue;
-    return step;
+    return histogramHeight / maxValue;
   };
 
   var drawingColumnsWithResults = function (ctx, names, times, step) {
