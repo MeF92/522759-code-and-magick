@@ -18,14 +18,6 @@
 
   var openPopup = function () {
     setup.classList.remove('hidden');
-  };
-
-  var closePopup = function () {
-    setup.classList.add('hidden');
-  };
-
-  setupOpen.addEventListener('click', function () {
-    openPopup();
 
     document.addEventListener('keydown', function (evt) {
       if (evt.keyCode === ESC_KEYCODE && evt.target !== setupUserName) {
@@ -36,31 +28,23 @@
         closePopup();
       }
     });
+  };
+
+  var closePopup = function () {
+    setup.classList.add('hidden');
+  };
+
+  setupOpen.addEventListener('click', function () {
+    openPopup();
   });
 
-  setupClose.addEventListener('click', function () {
-    closePopup();
-  });
+  setupClose.addEventListener('click', closePopup);
 
-  setupSubmit.addEventListener('click', function () {
-    closePopup();
-  });
+  setupSubmit.addEventListener('click', closePopup);
 
   setupOpen.addEventListener('keydown', function (evt) {
     if (evt.keyCode === ENTER_KEYCODE) {
       openPopup();
-    }
-
-    document.addEventListener('keydown', function () {
-      if (evt.keyCode === ESC_KEYCODE) {
-        closePopup();
-      }
-    });
-  });
-
-  setupClose.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ENTER_KEYCODE) {
-      closePopup();
     }
   });
 
@@ -80,7 +64,7 @@
 
   var wizardFireball = document.querySelector('.setup-fireball-wrap');
   wizardFireball.addEventListener('click', function () {
-    wizardFireball.setAttribute('style', 'background-color: ' + WIZARD_FIREBALL_COLORS[getRandomInt(0, WIZARD_FIREBALL_COLORS.length - 1)]);
+    wizardFireball.style.backgroundColor = WIZARD_FIREBALL_COLORS[getRandomInt(0, WIZARD_FIREBALL_COLORS.length - 1)];
   });
 
   var similarListElement = setup.querySelector('.setup-similar-list');
