@@ -27,8 +27,13 @@
     });
   };
 
+  var setupElementX = 80;
+  var setupElementY = 50;
   var closePopup = function () {
     setupElement.classList.add('hidden');
+
+    setupElement.style.top = setupElementX + 'px';
+    setupElement.style.left = setupElementY + '%';
   };
 
   setupOpenElement.addEventListener('click', function () {
@@ -58,5 +63,43 @@
   var wizardFireball = document.querySelector('.setup-fireball-wrap');
   wizardFireball.addEventListener('click', function () {
     wizardFireball.style.backgroundColor = WIZARD_FIREBALL_COLORS[setup.getRandomInt(0, WIZARD_FIREBALL_COLORS.length - 1)];
+  });
+  // Реализуем перетаскивание диалогового окна
+  var dialogHandleElement = setupElement.querySelector('.setup-user-pic');
+  dialogHandleElement.style.zIndex = 10;
+  dialogHandleElement.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+
+    var startCoords = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
+
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+
+      var shift = {
+        x: startCoords.x - moveEvt.clientX,
+        y: startCoords.y - moveEvt.clientY
+      };
+
+      startCoords = {
+        x: moveEvt.clientX,
+        y: moveEvt.clientY
+      };
+
+      setupElement.style.top = (setupElement.offsetTop - shift.y) + 'px';
+      setupElement.style.left = (setupElement.offsetLeft - shift.x) + 'px';
+    };
+
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
   });
 })();
