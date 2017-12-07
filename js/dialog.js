@@ -4,6 +4,8 @@
   var WIZARD_FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
   var ESC_KEYCODE = 27;
   var ENTER_KEYCODE = 13;
+  var SETUP_ELEMENT_X = 80;
+  var SETUP_ELEMENT_Y = 50;
 
   var setup = window.setup;
   var setupElement = document.querySelector('.setup');
@@ -29,6 +31,9 @@
 
   var closePopup = function () {
     setupElement.classList.add('hidden');
+
+    setupElement.style.top = SETUP_ELEMENT_X + 'px';
+    setupElement.style.left = SETUP_ELEMENT_Y + '%';
   };
 
   setupOpenElement.addEventListener('click', function () {
@@ -58,5 +63,43 @@
   var wizardFireball = document.querySelector('.setup-fireball-wrap');
   wizardFireball.addEventListener('click', function () {
     wizardFireball.style.backgroundColor = WIZARD_FIREBALL_COLORS[setup.getRandomInt(0, WIZARD_FIREBALL_COLORS.length - 1)];
+  });
+  // Реализуем перетаскивание диалогового окна
+  var dialogHandleElement = setupElement.querySelector('.setup-user-pic');
+  dialogHandleElement.style.zIndex = 10;
+  dialogHandleElement.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+
+    var startCoords = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
+
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+
+      var shift = {
+        x: startCoords.x - moveEvt.clientX,
+        y: startCoords.y - moveEvt.clientY
+      };
+
+      startCoords = {
+        x: moveEvt.clientX,
+        y: moveEvt.clientY
+      };
+
+      setupElement.style.top = (setupElement.offsetTop - shift.y) + 'px';
+      setupElement.style.left = (setupElement.offsetLeft - shift.x) + 'px';
+    };
+
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
   });
 })();

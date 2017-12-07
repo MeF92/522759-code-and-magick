@@ -49,6 +49,50 @@
     WIZARD_COAT_COLORS: WIZARD_COAT_COLORS,
     WIZARD_EYES_COLORS: WIZARD_EYES_COLORS
   };
+  // Реализуем перетаскивание артефактов
+  var shopElement = document.querySelector('.setup-artifacts-shop');
+  var draggedItem = null;
+
+  shopElement.addEventListener('dragstart', function (evt) {
+    if (evt.target.tagName.toLowerCase() === 'img') {
+      artifactsElement.style.outline = '2px dashed red';
+      draggedItem = evt.target;
+      evt.dataTransfer.setData('text/plain', evt.target.alt);
+    }
+    document.addEventListener('dragend', function () {
+      artifactsElement.style.outline = '';
+    });
+  });
+
+  var artifactsElement = document.querySelector('.setup-artifacts');
+
+  artifactsElement.addEventListener('dragover', function (evt) {
+    evt.preventDefault();
+    return false;
+  });
+
+  var onDragDrop = function (evt) {
+    evt.preventDefault();
+    evt.target.style.backgroundColor = '';
+  };
+
+  artifactsElement.addEventListener('drop', function (evt) {
+    if (evt.target.childElementCount > 0) {
+      onDragDrop(evt);
+    } else {
+      onDragDrop(evt);
+      evt.target.appendChild(draggedItem.cloneNode(true));
+    }
+  });
+
+  artifactsElement.addEventListener('dragenter', function (evt) {
+    evt.target.style.backgroundColor = 'yellow';
+    evt.preventDefault();
+  });
+
+  artifactsElement.addEventListener('dragleave', function (evt) {
+    onDragDrop(evt);
+  });
 })();
 
 
