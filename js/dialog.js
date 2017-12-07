@@ -4,6 +4,8 @@
   var WIZARD_FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
   var ESC_KEYCODE = 27;
   var ENTER_KEYCODE = 13;
+  var SETUP_ELEMENT_X = 80;
+  var SETUP_ELEMENT_Y = 50;
 
   var setup = window.setup;
   var setupElement = document.querySelector('.setup');
@@ -27,13 +29,11 @@
     });
   };
 
-  var setupElementX = 80;
-  var setupElementY = 50;
   var closePopup = function () {
     setupElement.classList.add('hidden');
 
-    setupElement.style.top = setupElementX + 'px';
-    setupElement.style.left = setupElementY + '%';
+    setupElement.style.top = SETUP_ELEMENT_X + 'px';
+    setupElement.style.left = SETUP_ELEMENT_Y + '%';
   };
 
   setupOpenElement.addEventListener('click', function () {
