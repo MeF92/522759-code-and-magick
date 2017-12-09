@@ -51,19 +51,20 @@
   });
 
   var wizardCoat = document.querySelector('.wizard-coat');
-  wizardCoat.addEventListener('click', function () {
-    wizardCoat.style.fill = setup.WIZARD_COAT_COLORS[setup.getRandomInt(0, setup.WIZARD_COAT_COLORS.length - 1)];
-  });
-
   var wizardEyes = document.querySelector('.wizard-eyes');
-  wizardEyes.addEventListener('click', function () {
-    wizardEyes.style.fill = setup.WIZARD_EYES_COLORS[setup.getRandomInt(0, setup.WIZARD_EYES_COLORS.length - 1)];
-  });
-
   var wizardFireball = document.querySelector('.setup-fireball-wrap');
-  wizardFireball.addEventListener('click', function () {
-    wizardFireball.style.backgroundColor = WIZARD_FIREBALL_COLORS[setup.getRandomInt(0, WIZARD_FIREBALL_COLORS.length - 1)];
-  });
+
+  var fillElement = function (element, color) {
+    element.style.fill = color[setup.getRandomInt(0, color.length - 1)];
+  };
+
+  var changeElementBackground = function (element, color) {
+    element.style.backgroundColor = color[setup.getRandomInt(0, color.length - 1)];
+  };
+
+  window.colorize.colorizeElement(wizardCoat, setup.WIZARD_COAT_COLORS, fillElement);
+  window.colorize.colorizeElement(wizardEyes, setup.WIZARD_EYES_COLORS, fillElement);
+  window.colorize.colorizeElement(wizardFireball, WIZARD_FIREBALL_COLORS, changeElementBackground);
   // Реализуем перетаскивание диалогового окна
   var dialogHandleElement = setupElement.querySelector('.setup-user-pic');
   dialogHandleElement.style.zIndex = 10;
