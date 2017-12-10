@@ -54,12 +54,12 @@
   var wizardEyes = document.querySelector('.wizard-eyes');
   var wizardFireball = document.querySelector('.setup-fireball-wrap');
 
-  var fillElement = function (element, color) {
-    element.style.fill = color[setup.getRandomInt(0, color.length - 1)];
+  var fillElement = function (element, colors) {
+    element.style.fill = colors[setup.getRandomInt(0, colors.length - 1)];
   };
 
-  var changeElementBackground = function (element, color) {
-    element.style.backgroundColor = color[setup.getRandomInt(0, color.length - 1)];
+  var changeElementBackground = function (element, colors) {
+    element.style.backgroundColor = colors[setup.getRandomInt(0, colors.length - 1)];
   };
 
   window.colorize.colorizeElement(wizardCoat, setup.WIZARD_COAT_COLORS, fillElement);

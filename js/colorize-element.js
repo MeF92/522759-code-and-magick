@@ -1,9 +1,9 @@
 'use strict';
 
 (function () {
-  var colorizeElement = function (element, color, action) {
+  var colorizeElement = function (element, colors, action) {
     element.addEventListener('click', function () {
-      action(element, color);
+      action(element, colors);
     });
   };
   window.colorize = {
