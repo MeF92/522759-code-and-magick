@@ -1,5 +1,6 @@
 'use strict';
 
+// Работа с окном персонажа
 (function () {
   var WIZARD_FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
   var ESC_KEYCODE = 27;
@@ -102,5 +103,13 @@
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
+  });
+
+  // Отправляем данные о персонаже на сервер
+  var formElement = setupElement.querySelector('.setup-wizard-form');
+  formElement.addEventListener('submit', function (evt) {
+    window.backend.save(new FormData(formElement), function () {
+    });
+    evt.preventDefault();
   });
 })();
