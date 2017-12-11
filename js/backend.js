@@ -2,7 +2,7 @@
 
 // Настройка работы с сервером
 (function () {
-  var SERVER_URL = 'https://1510.dump.academy/code-and-magick1';
+  var SERVER_URL = 'https://1510.dump.academy/code-and-magick';
 
   var loadSetup = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
