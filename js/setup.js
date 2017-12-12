@@ -24,8 +24,12 @@
   var successHandler = function (wizards) {
     var fragment = document.createDocumentFragment();
 
+    var numIndex;
+    var wizardsArr = wizards.slice();
     for (var i = 0; i < 4; i++) {
-      fragment.appendChild(renderWizard(wizards[i]));
+      numIndex = getRandomInt(0, wizardsArr.length - 1);
+      fragment.appendChild(renderWizard(wizardsArr[numIndex]));
+      wizardsArr.splice(numIndex, 1);
     }
     similarListElement.appendChild(fragment);
   };
