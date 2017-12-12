@@ -61,11 +61,7 @@
   var fillElement = function (element, colors, input) {
     var randomColor = colors[setup.getRandomInt(0, colors.length - 1)];
     element.style.fill = randomColor;
-    if (input.name === 'coat-color') {
-      input.value = randomColor;
-    } else {
-      input.value = randomColor;
-    }
+    input.value = randomColor;
   };
 
   var changeElementBackground = function (element, colors, input) {
