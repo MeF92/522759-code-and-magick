@@ -2,13 +2,11 @@
 
 // Работа с окном персонажа
 (function () {
-  var WIZARD_FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
   var ESC_KEYCODE = 27;
   var ENTER_KEYCODE = 13;
   var SETUP_ELEMENT_X = 80;
   var SETUP_ELEMENT_Y = 50;
 
-  var setup = window.setup;
   var setupElement = document.querySelector('.setup');
   var setupOpenElement = document.querySelector('.setup-open');
   var setupCloseElement = setupElement.querySelector('.setup-close');
@@ -43,36 +41,11 @@
 
   setupCloseElement.addEventListener('click', closePopup);
 
-  // setupSubmitElement.addEventListener('click', closePopup);
-
   setupOpenElement.addEventListener('keydown', function (evt) {
     if (evt.keyCode === ENTER_KEYCODE) {
       openPopup();
     }
   });
-
-  var wizardCoat = document.querySelector('.wizard-coat');
-  var inputWizardCoat = document.querySelector('.setup-wizard-appearance input:first-of-type');
-  var wizardEyes = document.querySelector('.wizard-eyes');
-  var inputWizardEyes = document.querySelector('.setup-wizard-appearance input:last-of-type');
-  var wizardFireball = document.querySelector('.setup-fireball-wrap');
-  var inputWizardFireball = document.querySelector('.setup-fireball-wrap input');
-
-  var fillElement = function (element, colors, input) {
-    var randomColor = colors[setup.getRandomInt(0, colors.length - 1)];
-    element.style.fill = randomColor;
-    input.value = randomColor;
-  };
-
-  var changeElementBackground = function (element, colors, input) {
-    var randomColor = colors[setup.getRandomInt(0, colors.length - 1)];
-    element.style.backgroundColor = randomColor;
-    input.value = randomColor;
-  };
-
-  window.colorize.colorizeElement(wizardCoat, setup.WIZARD_COAT_COLORS, fillElement, inputWizardCoat);
-  window.colorize.colorizeElement(wizardEyes, setup.WIZARD_EYES_COLORS, fillElement, inputWizardEyes);
-  window.colorize.colorizeElement(wizardFireball, WIZARD_FIREBALL_COLORS, changeElementBackground, inputWizardFireball);
   // Реализуем перетаскивание диалогового окна
   var dialogHandleElement = setupElement.querySelector('.setup-user-pic');
   dialogHandleElement.style.zIndex = 10;
