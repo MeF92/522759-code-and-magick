@@ -2,97 +2,42 @@
 
 // Работа с окном похожих персонажей
 (function () {
-  var WIZARD_COAT_COLORS = [
-    'rgb(146, 100, 161)',
-    'rgb(215, 210, 55)',
-    'rgb(241, 43, 107)',
-    'rgb(101, 137, 164)',
-    'rgb(0, 0, 0)',
-    'rgb(215, 210, 55)',
-    'rgb(56, 159, 117)',
-    'rgb(241, 43, 107)'
-  ];
-
-  var WIZARD_EYES_COLORS = [
-    'red',
-    'orange',
-    'yellow',
-    'green',
-    'lightblue',
-    'blue',
-    'purple'
-  ];
-  var WIZARD_FIREBALL_COLORS = [
-    '#ee4830',
-    '#30a8ee',
-    '#5ce6c0',
-    '#e848d5',
-    '#e6e848'
-  ];
-
   var wizards = [];
   var coatColor;
   var eyesColor;
 
-  var updateWizards = function () {
+  var getRank = function (wizard) {
+    var rank = 0;
 
-    var sameCoatAndEyesWizards = wizards.filter(function (it) {
-      return it.colorCoat === coatColor &&
-        it.colorEyes === eyesColor;
-    });
-
-    var sameCoatWizards = wizards.filter(function (it) {
-      return it.colorCoat === coatColor;
-    });
-    var sameEyesWizards = wizards.filter(function (it) {
-      return it.colorEyes === eyesColor;
-    });
-
-    var filteredWizards = sameCoatAndEyesWizards;
-    filteredWizards = filteredWizards.concat(sameCoatWizards);
-    filteredWizards = filteredWizards.concat(sameEyesWizards);
-    filteredWizards = filteredWizards.concat(wizards);
-
-    var uniqueWizards =
-      filteredWizards.filter(function (it, i) {
-        return filteredWizards.indexOf(it) === i;
-      });
-
-    window.render(uniqueWizards);
-  };
-
-  var getRandomInt = function (min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  };
-
-  var wizardCoat = document.querySelector('.wizard-coat');
-  var inputWizardCoat = document.querySelector('.setup-wizard-appearance input:first-of-type');
-  var wizardEyes = document.querySelector('.wizard-eyes');
-  var inputWizardEyes = document.querySelector('.setup-wizard-appearance input:last-of-type');
-  var wizardFireball = document.querySelector('.setup-fireball-wrap');
-  var inputWizardFireball = document.querySelector('.setup-fireball-wrap input');
-
-  var fillElement = function (element, colors, input, evt) {
-    var randomColor = colors[getRandomInt(0, colors.length - 1)];
-    element.style.fill = randomColor;
-    input.value = randomColor;
-    if (evt.target === wizardCoat) {
-      coatColor = randomColor;
-    } else {
-      eyesColor = randomColor;
+    if (wizard.colorCoat === coatColor) {
+      rank += 2;
     }
-    updateWizards();
+    if (wizard.colorEyes === eyesColor) {
+      rank += 1;
+    }
+
+    return rank;
   };
 
-  var changeElementBackground = function (element, colors, input) {
-    var randomColor = colors[getRandomInt(0, colors.length - 1)];
-    element.style.backgroundColor = randomColor;
-    input.value = randomColor;
+  var updateWizards = function () {
+    window.render(wizards.slice().sort(function (left, right) {
+      var rankDiff = getRank(right) - getRank(left);
+      if (rankDiff === 0) {
+        rankDiff = wizards.indexOf(left) - wizards.indexOf(right);
+      }
+      return rankDiff;
+    }));
   };
 
-  window.colorize.colorizeElement(wizardCoat, WIZARD_COAT_COLORS, fillElement, inputWizardCoat);
-  window.colorize.colorizeElement(wizardEyes, WIZARD_EYES_COLORS, fillElement, inputWizardEyes);
-  window.colorize.colorizeElement(wizardFireball, WIZARD_FIREBALL_COLORS, changeElementBackground, inputWizardFireball);
+  window.wizard.onEyesChange = function (color) {
+    eyesColor = color;
+    window.debounce(updateWizards);
+  };
+
+  window.wizard.onCoatChange = function (color) {
+    coatColor = color;
+    window.debounce(updateWizards);
+  };
 
   var successHandler = function (data) {
     wizards = data;
